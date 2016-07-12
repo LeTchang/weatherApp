@@ -22,14 +22,16 @@ class ViewController: UIViewController {
     
     func initData() {
         let url = "http://api.openweathermap.org/data/2.5/forecast?id=" + String(Paris.id) + "&APPID=" + key
-        print(url)
         Alamofire.request(.POST, url).validate().responseJSON {
             response in
             switch response.result {
             case .Success:
                 if let value = response.result.value {
                     let json = JSON(value)
-                    print(json.description)
+                    let n = json["list"].count
+                    for x in 0 ..< n {
+                        print(json["list"][x]["dt_txt"], json["list"][x]["weather"][0])
+                    }
                 }
             case .Failure:
                 print("Error while loading datas")
