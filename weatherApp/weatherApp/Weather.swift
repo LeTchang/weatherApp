@@ -7,30 +7,29 @@
 //
 
 import UIKit
+import RealmSwift
 
-class Weather {
+class Weather: Object {
 
-    let icon: String
-    let id: String
-    let main: String
-    let description: String
-    let time: String
-    
-    init(icon: String, id: String, main: String, description: String, time: String) {
-        self.icon = icon
-        self.id = id
-        self.main = main
-        self.description = description
-        self.time = time
-    }
+    dynamic var icon = ""
+    dynamic var id = ""
+    dynamic var main = ""
+    dynamic var descri = ""
+    dynamic var time = ""
 }
 
-class Day {
+class Day: Object {
     
-    let date: String
-    var weathers: [Weather] = []
+    dynamic var date = ""
+    let weathers = List<Weather>()
+}
+
+class Meteo: Object {
     
-    init(date: String) {
-        self.date = date
+    dynamic var created: NSDate? = nil
+    let meteo = List<Day>()
+    
+    func show() {
+        print(meteo)
     }
 }
