@@ -11,13 +11,19 @@ import SwiftyJSON
 import Alamofire
 import RealmSwift
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    // MARK: - IBOutlet
+    @IBOutlet weak var meteoTableView: UITableView!
 
     let Paris = City(name: "Paris", country: "FR", id: 6455259, long: 2.35236, lat: 48.856461)
     let key = "8a25d66f07d77f5b66bdf01bb8f25dda"
+    var meteo:Results<Meteo>? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(imageLiteral: "background"))
+        self.meteoTableView.backgroundColor = UIColor.clearColor()
 //        try! myRealm.write {
 //            myRealm.deleteAll()
 //        }
@@ -25,12 +31,13 @@ class ViewController: UIViewController {
     }
     
     func checkData() {
-        let meteo = myRealm.objects(Meteo.self)
-        if meteo.first == nil {
+        meteo = myRealm.objects(Meteo.self)
+        if meteo!.first == nil {
             print("No data. Updating new one")
             updateData() {}
         } else {
             print("Data found. No need to reload")
+            meteo!.first?.show()
         }
     }
     
@@ -58,8 +65,11 @@ class ViewController: UIViewController {
                         newWeather.icon = json["list"][x]["weather"][0]["icon"].string!
                         newWeather.id = String(json["list"][x]["weather"][0]["id"])
                         newWeather.main = json["list"][x]["weather"][0]["main"].string!
-                        newWeather.icon = json["list"][x]["weather"][0]["description"].string!
+                        newWeather.descri = json["list"][x]["weather"][0]["description"].string!
                         newWeather.time = time
+                        newWeather.tMax = (json["list"][x]["main"]["temp_max"].float?.celcius)!
+                        newWeather.tMin = (json["list"][x]["main"]["temp_min"].float?.celcius)!
+                        newWeather.t = (json["list"][x]["main"]["temp"].float?.celcius)!
                         if (currentDay != day) {
                             currentDay = day
                             if first {
@@ -80,6 +90,49 @@ class ViewController: UIViewController {
             case .Failure:
                 print("Error while loading datas")
             }
+        }
+    }
+    
+    // MARK: - TableView
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (meteo?.first?.meteo.count)!
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("customCell") as! customTableviewCell
+        var temps = "Min: " + String((meteo?.first?.meteo[indexPath.row].weathers[0].tMin)!)
+        temps += " | Max: " + String((meteo?.first?.meteo[indexPath.row].weathers[0].tMax)!)
+        
+        cell.backgroundColor = UIColor.clearColor()
+        cell.dateText.backgroundColor = UIColor.clearColor()
+        cell.descriptionText.backgroundColor = UIColor.clearColor()
+        cell.minMaxTempText.backgroundColor = UIColor.clearColor()
+        cell.tempText.backgroundColor = UIColor.clearColor()
+        
+        cell.dateText.borderStyle = UITextBorderStyle.None
+        cell.descriptionText.borderStyle = UITextBorderStyle.None
+        cell.minMaxTempText.borderStyle = UITextBorderStyle.None
+        cell.tempText.borderStyle = UITextBorderStyle.None
+        
+        cell.dateText.text = meteo?.first?.meteo[indexPath.row].date
+        cell.descriptionText.text = meteo?.first?.meteo[indexPath.row].weathers[0].descri
+        cell.minMaxTempText.text = temps
+        cell.tempText.text = String((meteo?.first?.meteo[indexPath.row].weathers[0].t)!)
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        performSegueWithIdentifier("nextSegue", sender: nil)
+    }
+    
+    // MARK: - Segue
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "nextSegue" {
+            print("Content View called")
         }
     }
     

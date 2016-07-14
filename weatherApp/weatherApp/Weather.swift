@@ -16,6 +16,9 @@ class Weather: Object {
     dynamic var main = ""
     dynamic var descri = ""
     dynamic var time = ""
+    dynamic var tMax = 0
+    dynamic var tMin = 0
+    dynamic var t = 0
 }
 
 class Day: Object {
