@@ -16,7 +16,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK: - IBOutlet
     @IBOutlet weak var meteoTableView: UITableView!
+    
 
+    // MARK: - Variables
     let Paris = City(name: "Paris", country: "FR", id: 6455259, long: 2.35236, lat: 48.856461)
     let key = "8a25d66f07d77f5b66bdf01bb8f25dda"
     var meteo:Results<Meteo>? = nil
@@ -25,9 +27,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(imageLiteral: "background"))
         self.meteoTableView.backgroundColor = UIColor.clearColor()
-//        try! myRealm.write {
-//            myRealm.deleteAll()
-//        }
         checkData()
     }
     
@@ -139,6 +138,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         performSegueWithIdentifier("nextSegue", sender: nil)
     }
     
+    // MARK: - IBActions
+    @IBAction func onTrash(sender: AnyObject) {
+        let alert = UIAlertController(title: "Delete all data",
+                                      message: "Are you sure ?",
+                                      preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        alert.addAction(UIAlertAction(title: "DELETE", style: UIAlertActionStyle.Default, handler: { (action) in
+            try! myRealm.write {
+                myRealm.deleteAll()
+                self.meteoTableView.reloadData()
+            }
+        }))
+        alert.view.setNeedsLayout()
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func onRefresh(sender: AnyObject) {
+        updateData() {
+            completion in
+            self.meteoTableView.reloadData()
+        }
+    }
+
     // MARK: - Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "nextSegue" {

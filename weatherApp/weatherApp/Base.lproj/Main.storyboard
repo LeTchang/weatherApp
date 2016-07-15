@@ -108,8 +108,16 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Meteo - Paris" id="xYS-fh-qIs">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="refresh" id="5mV-Xv-VJd"/>
-                            <barButtonItem systemItem="trash" id="N55-1P-P7k"/>
+                            <barButtonItem systemItem="refresh" id="5mV-Xv-VJd">
+                                <connections>
+                                    <action selector="onRefresh:" destination="BYZ-38-t0r" id="s3L-5N-HIL"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="trash" id="N55-1P-P7k">
+                                <connections>
+                                    <action selector="onTrash:" destination="BYZ-38-t0r" id="VGa-uh-J30"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>

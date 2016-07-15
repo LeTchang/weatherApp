@@ -124,12 +124,10 @@
 		93AFCB3D1D34E03200B8ABEC /* weatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				93E8B03F1D393465002AC36B /* Others */,
 				93AFCB6C1D34E31100B8ABEC /* Model */,
 				93AFCB6D1D34E31B00B8ABEC /* View */,
 				93AFCB6E1D34E32C00B8ABEC /* Controller */,
-				93AFCB3E1D34E03200B8ABEC /* AppDelegate.swift */,
-				93AFCB451D34E03200B8ABEC /* Assets.xcassets */,
-				93AFCB4A1D34E03200B8ABEC /* Info.plist */,
 			);
 			path = weatherApp;
 			sourceTree = "<group>";
@@ -179,6 +177,16 @@
 				9386310B1D3829C80037F15A /* DetailViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		93E8B03F1D393465002AC36B /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				93AFCB3E1D34E03200B8ABEC /* AppDelegate.swift */,
+				93AFCB451D34E03200B8ABEC /* Assets.xcassets */,
+				93AFCB4A1D34E03200B8ABEC /* Info.plist */,
+			);
+			name = Others;
 			sourceTree = "<group>";
 		};
 		A633A80088BFC5BC63D3D3EA /* Pods */ = {
