@@ -40,7 +40,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    // MARK: - This part is really toxic
+    // MARK: - Check and download all the data needed and save it
     func updateData(completion: () -> Void) {
         let url = "http://api.openweathermap.org/data/2.5/forecast?id=" + String(Paris.id) + "&APPID=" + key
         let prevision = Meteo()
@@ -87,7 +87,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 completion()
                 }
             case .Failure:
-                print("Error while loading datas")
+                let alert = UIAlertController(title: "Error while loading datas",
+                    message: "Please check your internet connection and refresh",
+                    preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler: nil))
+                alert.view.setNeedsLayout()
+                self.presentViewController(alert, animated: true, completion: nil)
             }
         }
     }
