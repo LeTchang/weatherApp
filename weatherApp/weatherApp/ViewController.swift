@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import AlamofireImage
 import RealmSwift
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -33,11 +34,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func checkData() {
         meteo = myRealm.objects(Meteo.self)
         if meteo!.first == nil {
-            print("No data. Updating new one")
-            updateData() {}
-        } else {
-            print("Data found. No need to reload")
-            meteo!.first?.show()
+            updateData() {
+                completion in
+                self.meteoTableView.reloadData()
+            }
         }
     }
     
@@ -94,15 +94,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     // MARK: - TableView
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (meteo?.first?.meteo.count)!
+        if let check = meteo?.first?.meteo.count {
+            return check
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("customCell") as! customTableviewCell
-        var temps = "Min: " + String((meteo?.first?.meteo[indexPath.row].weathers[0].tMin)!)
-        temps += " | Max: " + String((meteo?.first?.meteo[indexPath.row].weathers[0].tMax)!)
+        var temps = "Min: " + String((meteo?.first?.meteo[indexPath.row].weathers[0].tMin)!) + "°C"
+        temps += " | Max: " + String((meteo?.first?.meteo[indexPath.row].weathers[0].tMax)!) + "°C"
         
         cell.backgroundColor = UIColor.clearColor()
         cell.dateText.backgroundColor = UIColor.clearColor()
@@ -118,25 +120,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.dateText.text = meteo?.first?.meteo[indexPath.row].date
         cell.descriptionText.text = meteo?.first?.meteo[indexPath.row].weathers[0].descri
         cell.minMaxTempText.text = temps
-        cell.tempText.text = String((meteo?.first?.meteo[indexPath.row].weathers[0].t)!)
+        cell.tempText.text = String((meteo?.first?.meteo[indexPath.row].weathers[0].t)!) + "°C"
+        
+        let url = "http://openweathermap.org/img/w/" + (meteo?.first?.meteo[indexPath.row].weathers[0].icon)! + ".png"
+        Alamofire.request(.GET, url).responseImage {
+            response in
+            if let image = response.result.value {
+                cell.iconImage.image = image
+            } else {
+                cell.iconImage.image = nil
+            }
+        }
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         performSegueWithIdentifier("nextSegue", sender: nil)
     }
     
     // MARK: - Segue
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "nextSegue" {
-            print("Content View called")
+            let new = segue.destinationViewController as! DetailViewController
+            let index = self.meteoTableView.indexPathForSelectedRow!
+            new.index = index.row
+            new.meteo = self.meteo
+            self.meteoTableView.deselectRowAtIndexPath(index, animated: true)
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 }
