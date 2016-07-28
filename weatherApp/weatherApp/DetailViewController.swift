@@ -21,6 +21,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var meteo:Results<Meteo>? = nil
     
     override func viewDidLoad() {
+        let cellNib = UINib(nibName: "customCellView", bundle: nil)
+        self.detailTableView.registerNib(cellNib, forCellReuseIdentifier: "customCell")
         self.view.backgroundColor = UIColor(patternImage: UIImage(imageLiteral: "background"))
         self.detailTableView.backgroundColor = UIColor.clearColor()
         self.title = meteo?.first?.meteo[index].date
@@ -40,21 +42,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         temps += " | Max: " + String((meteo?.first?.meteo[index].weathers[indexPath.row].tMax)!) + "°C"
         
         cell.userInteractionEnabled = false
-        cell.backgroundColor = UIColor.clearColor()
-        cell.dateText.backgroundColor = UIColor.clearColor()
-        cell.descriptionText.backgroundColor = UIColor.clearColor()
-        cell.minMaxTempText.backgroundColor = UIColor.clearColor()
-        cell.tempText.backgroundColor = UIColor.clearColor()
-        
-        cell.dateText.borderStyle = UITextBorderStyle.None
-        cell.descriptionText.borderStyle = UITextBorderStyle.None
-        cell.minMaxTempText.borderStyle = UITextBorderStyle.None
-        cell.tempText.borderStyle = UITextBorderStyle.None
-        
-        cell.dateText.text = "Patate"
-        cell.descriptionText.text = "Patate"
-        cell.minMaxTempText.text = "Patate"
-        cell.tempText.text = "Patate"
         
         cell.dateText.text = meteo?.first?.meteo[index].weathers[indexPath.row].time
         cell.descriptionText.text = meteo?.first?.meteo[index].weathers[indexPath.row].descri

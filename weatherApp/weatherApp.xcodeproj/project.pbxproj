@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8053BDBBF405104C876005C9 /* Pods_weatherAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E3811A5E4F96BE89B828A /* Pods_weatherAppTests.framework */; };
 		872DF7736DA5E011071F2F23 /* Pods_weatherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B165941D90C97C7E0EC1399 /* Pods_weatherApp.framework */; };
+		93002B621D4256EA0052D7FC /* customCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93002B611D4256EA0052D7FC /* customCellView.xib */; };
 		938631081D378DCF0037F15A /* customTableviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938631071D378DCF0037F15A /* customTableviewCell.swift */; };
 		9386310A1D37976B0037F15A /* extensionFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938631091D37976B0037F15A /* extensionFloat.swift */; };
 		9386310C1D3829C80037F15A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9386310B1D3829C80037F15A /* DetailViewController.swift */; };
@@ -49,6 +50,7 @@
 		4496836DCFD56D95C4445D5E /* Pods-weatherApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-weatherApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-weatherApp/Pods-weatherApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7392271C10834125DA651C51 /* Pods_weatherAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_weatherAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84360542FA0021494ABB50CC /* Pods-weatherAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-weatherAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-weatherAppTests/Pods-weatherAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		93002B611D4256EA0052D7FC /* customCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = customCellView.xib; sourceTree = "<group>"; };
 		938631071D378DCF0037F15A /* customTableviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customTableviewCell.swift; sourceTree = "<group>"; };
 		938631091D37976B0037F15A /* extensionFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensionFloat.swift; sourceTree = "<group>"; };
 		9386310B1D3829C80037F15A /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			children = (
 				93AFCB421D34E03200B8ABEC /* Main.storyboard */,
 				93AFCB471D34E03200B8ABEC /* LaunchScreen.storyboard */,
+				93002B611D4256EA0052D7FC /* customCellView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93AFCB491D34E03200B8ABEC /* LaunchScreen.storyboard in Resources */,
+				93002B621D4256EA0052D7FC /* customCellView.xib in Resources */,
 				93AFCB461D34E03200B8ABEC /* Assets.xcassets in Resources */,
 				93AFCB441D34E03200B8ABEC /* Main.storyboard in Resources */,
 			);

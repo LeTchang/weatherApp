@@ -25,6 +25,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let cellNib = UINib(nibName: "customCellView", bundle: nil)
+        self.meteoTableView.registerNib(cellNib, forCellReuseIdentifier: "customCell")
         self.view.backgroundColor = UIColor(patternImage: UIImage(imageLiteral: "background"))
         self.meteoTableView.backgroundColor = UIColor.clearColor()
         checkData()
@@ -109,17 +111,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCellWithIdentifier("customCell") as! customTableviewCell
         var temps = "Min: " + String((meteo?.first?.meteo[indexPath.row].weathers[0].tMin)!) + "°C"
         temps += " | Max: " + String((meteo?.first?.meteo[indexPath.row].weathers[0].tMax)!) + "°C"
-        
-        cell.backgroundColor = UIColor.clearColor()
-        cell.dateText.backgroundColor = UIColor.clearColor()
-        cell.descriptionText.backgroundColor = UIColor.clearColor()
-        cell.minMaxTempText.backgroundColor = UIColor.clearColor()
-        cell.tempText.backgroundColor = UIColor.clearColor()
-        
-        cell.dateText.borderStyle = UITextBorderStyle.None
-        cell.descriptionText.borderStyle = UITextBorderStyle.None
-        cell.minMaxTempText.borderStyle = UITextBorderStyle.None
-        cell.tempText.borderStyle = UITextBorderStyle.None
         
         cell.dateText.text = meteo?.first?.meteo[indexPath.row].date
         cell.descriptionText.text = meteo?.first?.meteo[indexPath.row].weathers[0].descri
